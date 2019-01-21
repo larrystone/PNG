@@ -1,11 +1,18 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import routes from './routes';
+import config from './config';
 
 const app = express();
 
 const { PORT = 3000 } = process.env;
 
+config();
+
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/api/numbers', routes);
 
 app.get('/', (req, res) => res.send('Welcome to nothing land!!!'));
 
