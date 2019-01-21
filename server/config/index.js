@@ -13,7 +13,7 @@ export default async () => {
         await fs.mkdir(baseDir);
       }
     });
-  } catch ({ message }) {
-    console.log('Could not create data folder: ', message);
+  } catch (error) {
+    // console.log('Could not create data folder: ', error.message);
   }
 };

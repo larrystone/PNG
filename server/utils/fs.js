@@ -11,48 +11,48 @@ fs.close = util.promisify(fs.close);
 
 const baseDir = path.join(__dirname, '../.data');
 
-export const createFile = async (data) => {
-  const filename = new Date().getTime();
+export default class {
+  static async createFile(filename, data) {
+    try {
+      const fileDesc = await fs.open(`${baseDir}/${filename}`, 'wx');
 
-  try {
-    const fileDesc = await fs.open(`${baseDir}/batch_${filename}`, 'wx');
-
-    const stringData = JSON.stringify(data);
-    await fs.writeFile(fileDesc, stringData);
-    await fs.close(fileDesc);
-  } catch ({ message }) {
-    throw new Error(message);
+      const stringData = JSON.stringify(data);
+      await fs.writeFile(fileDesc, stringData);
+      return await fs.close(fileDesc);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
-};
 
-export const readFile = async (filename) => {
-  try {
-    const file = await fs.readFile(`${baseDir}/${filename}`);
+  static async readFile(filename) {
+    try {
+      const file = await fs.readFile(`${baseDir}/${filename}`);
 
-    return file;
-  } catch ({ errno, message }) {
-    if (errno === -2) return false;
-    throw new Error(message);
+      return file;
+    } catch ({ errno, message }) {
+      if (errno === -2) return false;
+      throw new Error(message);
+    }
   }
-};
 
-export const readFiles = async () => {
-  try {
-    const files = await fs.readdir(baseDir);
+  static async readFiles() {
+    try {
+      const files = await fs.readdir(baseDir);
 
-    return files;
-  } catch (error) {
-    throw new Error(error);
+      return files.map(file => ({ id: file }));
+    } catch (error) {
+      throw new Error(error);
+    }
   }
-};
 
 
-export const deleteFile = async (filename) => {
-  try {
-    await fs.unlink(`${baseDir}/${filename}`);
-    return 'OK';
-  } catch ({ errno, message }) {
-    if (errno === -2) return false;
-    throw new Error(message);
+  static async deleteFile(filename) {
+    try {
+      await fs.unlink(`${baseDir}/${filename}`);
+      return 'OK';
+    } catch (error) {
+      if (error.errno === -2) return false;
+      throw new Error(error.message);
+    }
   }
-};
+}
