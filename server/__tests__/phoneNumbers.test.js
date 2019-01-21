@@ -5,8 +5,8 @@ import fs from 'fs';
 import util from 'util';
 import app from '../app';
 
-fs.readdir = util.promisify(fs.readdir);
-fs.unlink = util.promisify(fs.unlink);
+const readdir = util.promisify(fs.readdir);
+const unlink = util.promisify(fs.unlink);
 chai.use(chaiHttp);
 
 const baseUrl = '/api/phoneNumbers';
@@ -18,8 +18,8 @@ let id;
 describe('phoneNumbers Controller test', () => {
   before(async () => {
     try {
-      const files = await fs.readdir(dataLocation);
-      const filesToDelete = files.map(file => fs.unlink(`${dataLocation}/${file}`));
+      const files = await readdir(dataLocation);
+      const filesToDelete = files.map(file => unlink(`${dataLocation}/${file}`));
 
       await Promise.all(filesToDelete)
     } catch (error) {
