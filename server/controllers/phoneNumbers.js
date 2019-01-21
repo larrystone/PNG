@@ -1,19 +1,20 @@
 import sendResponse from '../utils/sendResponse';
 import generateNumbers from '../utils/generateNumbers';
-import {
-  createFile, readFile, readFiles, deleteFile,
-} from '../utils/fs';
+import fs from '../utils/fs';
 
 export default class {
-  static async create({ body }, res) {
-    const { total = 20 } = body;
+  static async create({ query }, res) {
+    const total = parseInt(query.n, 10) || 500;
 
     try {
       const numbers = generateNumbers(total);
 
+      const filename = `batch_${new Date().getTime()}`;
+
       const { length } = numbers;
 
       const parsedResult = {
+        id: filename,
         total: length,
         min: numbers[0],
         max: numbers[length - 1],
@@ -21,10 +22,10 @@ export default class {
         numbers,
       };
 
-      await createFile(parsedResult);
+      await fs.createFile(filename, parsedResult);
 
       return sendResponse(res, 201, {
-        message: 'New Numbers generated',
+        message: 'New phone numbers generated',
         ...parsedResult,
       });
     } catch ({ message }) {
@@ -34,7 +35,7 @@ export default class {
 
   static async getAll(req, res) {
     try {
-      const files = await readFiles();
+      const files = await fs.readFiles();
 
       return sendResponse(res, 200, {
         message: 'Success',
@@ -49,7 +50,7 @@ export default class {
     const { id } = params;
 
     try {
-      const data = await readFile(id);
+      const data = await fs.readFile(id);
 
       if (!data) {
         return sendResponse(res, 404, {
@@ -67,7 +68,7 @@ export default class {
     const { id } = params;
 
     try {
-      const data = await deleteFile(id);
+      const data = await fs.deleteFile(id);
 
       if (!data) {
         return sendResponse(res, 404, {
