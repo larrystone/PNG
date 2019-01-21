@@ -3,11 +3,11 @@ import phoneNumbers from './controllers/phoneNumbers';
 
 const routes = express();
 
-routes.route('/')
+routes.route('/api/phoneNumbers')
   .post(phoneNumbers.create)
   .get(phoneNumbers.getAll);
 
-routes.route('/:id')
+routes.route('/api/phoneNumbers/:id')
   .get(phoneNumbers.get)
   .delete(phoneNumbers.delete);
 

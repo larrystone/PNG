@@ -5,14 +5,22 @@
   "main": "server/app.js",
   "scripts": {
     "dev": "nodemon --watch server --exec babel-node -- server/app.js",
+    "dev:client": "webpack --mode development",
+    "build:client": "webpack --mode production",
     "test:server": "nyc mocha server/__tests__/* --require babel-core/register --exit"
   },
   "repository": "https://github.com/larrystone/PNG.git",
   "author": "lawal lanre <lanre.lawal@andela.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-loader": "^7.1.0",
+    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "webpack": "^4.29.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -21,8 +29,10 @@
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
-    "nyc": "^13.1.0"
+    "nyc": "^13.1.0",
+    "webpack-cli": "^3.2.1"
   }
 }
