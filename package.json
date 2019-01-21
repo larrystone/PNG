@@ -1,0 +1,23 @@
+{
+  "name": "png",
+  "version": "1.0.0",
+  "description": "A phone number generator project",
+  "main": "server/app.js",
+  "scripts": {
+    "dev": "nodemon --watch server --exec babel-node -- server/app.js"
+  },
+  "repository": "https://github.com/larrystone/PNG.git",
+  "author": "lawal lanre <lanre.lawal@andela.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "nodemon": "^1.18.9"
+  }
+}
