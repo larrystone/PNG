@@ -5,21 +5,21 @@ import fs from 'fs';
 import util from 'util';
 import app from '../app';
 
-fs.readdir = util.promisify(fs.readdir);
-fs.unlink = util.promisify(fs.unlink);
+const readdir = util.promisify(fs.readdir);
+const unlink = util.promisify(fs.unlink);
 chai.use(chaiHttp);
 
 const baseUrl = '/api/phoneNumbers';
 
 const dataLocation = path.join(__dirname, '../.data');
 
-let id;
+let batchId;
 
 describe('phoneNumbers Controller test', () => {
   before(async () => {
     try {
-      const files = await fs.readdir(dataLocation);
-      const filesToDelete = files.map(file => fs.unlink(`${dataLocation}/${file}`));
+      const files = await readdir(dataLocation);
+      const filesToDelete = files.map(file => unlink(`${dataLocation}/${file}`));
 
       await Promise.all(filesToDelete)
     } catch (error) {
@@ -33,7 +33,7 @@ describe('phoneNumbers Controller test', () => {
         .post(`${baseUrl}?n=50`)
         .set('Accept', 'application/json');
 
-      id = res.body.id;
+      batchId = res.body.batchId;
       expect(res.statusCode).to.equal(201);
       expect(res.body.message).to.equal('New phone numbers generated');
       expect(res.body.total).to.equal(50);
@@ -76,7 +76,7 @@ describe('phoneNumbers Controller test', () => {
     });
 
     it('return the numbers in a batch file', async () => {
-      const res = await chai.request(app).get(`${baseUrl}/${id}`);
+      const res = await chai.request(app).get(`${baseUrl}/${batchId}`);
 
       expect(res.statusCode).to.equal(200);
       expect(res.body.numbers).to.be.an('array');
@@ -94,13 +94,13 @@ describe('phoneNumbers Controller test', () => {
 
   describe('/DELETE', () => {
     it('delete a number batch', async () => {
-      const res = await chai.request(app).delete(`${baseUrl}/${id}`);
+      const res = await chai.request(app).delete(`${baseUrl}/${batchId}`);
 
       expect(res.statusCode).to.equal(200);
     });
 
     it('return an error for an invalid id - 404', async () => {
-      const res = await chai.request(app).get(`${baseUrl}/${id}`);
+      const res = await chai.request(app).get(`${baseUrl}/${batchId}`);
 
       expect(res.statusCode).to.equal(404);
       expect(res.body.error).to.equal('Batch not found');

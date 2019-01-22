@@ -7,7 +7,7 @@ routes.route('/')
   .post(phoneNumbers.create)
   .get(phoneNumbers.getAll);
 
-routes.route('/:id')
+routes.route('/:batchId')
   .get(phoneNumbers.get)
   .delete(phoneNumbers.delete);
 
