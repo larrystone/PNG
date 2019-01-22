@@ -39,7 +39,7 @@ export default class {
     try {
       const files = await readdir(baseDir);
 
-      return files.map(file => ({ id: file }));
+      return files.map(file => ({ batchId: file }));
     } catch (error) {
       throw new Error(error);
     }

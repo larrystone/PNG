@@ -14,7 +14,7 @@ export default class {
       const { length } = numbers;
 
       const parsedResult = {
-        id: filename,
+        batchId: filename,
         total: length,
         min: numbers[0],
         max: numbers[length - 1],
@@ -47,10 +47,10 @@ export default class {
   }
 
   static async get({ params }, res) {
-    const { id } = params;
+    const { batchId } = params;
 
     try {
-      const data = await fs.readFile(id);
+      const data = await fs.readFile(batchId);
 
       if (!data) {
         return sendResponse(res, 404, {
@@ -65,10 +65,10 @@ export default class {
   }
 
   static async delete({ params }, res) {
-    const { id } = params;
+    const { batchId } = params;
 
     try {
-      const data = await fs.deleteFile(id);
+      const data = await fs.deleteFile(batchId);
 
       if (!data) {
         return sendResponse(res, 404, {
