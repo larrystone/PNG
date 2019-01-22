@@ -1,4 +1,6 @@
-const generateNumber = () => 0 + (`${Math.random()}`).substring(2, 11);
+const min = 100000000;
+const max = 999999999
+const generateNumber = () => 0 + `${Math.random() * (max - min) + min}`.substring(0, 9);
 
 export default (total) => {
   const numbers = new Set();
