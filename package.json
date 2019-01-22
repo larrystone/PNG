@@ -12,7 +12,8 @@
     "dev:server": "nodemon --watch server --exec babel-node -- server/app.js",
     "build:client": "webpack --config webpack.prod.js",
     "build:server": "babel -d ./dist ./server -s",
-    "test:server": "nyc mocha server/__tests__/* --require babel-core/register --exit"
+    "test:server": "nyc mocha server/__tests__/* --require babel-core/register --exit",
+    "test:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "repository": "https://github.com/larrystone/PNG.git",
   "author": "lawal lanre <lanre.lawal@andela.com>",

@@ -1,5 +1,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/77814f342caf5c685b6c/maintainability)](https://codeclimate.com/github/larrystone/PNG/maintainability)
 
+[![Build Status](https://travis-ci.org/larrystone/PNG.svg?branch=develop)](https://travis-ci.org/larrystone/PNG)
+
+[![codecov](https://codecov.io/gh/larrystone/PNG/branch/develop/graph/badge.svg)](https://codecov.io/gh/larrystone/PNG)
+
 # PNG
 PNG is a phone number generator app.
 
